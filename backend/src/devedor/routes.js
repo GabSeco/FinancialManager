@@ -3,4 +3,5 @@ module.exports = (app) => {
 
     app.post('/devedores', controller.create)
     app.get('/devedores', controller.findAll)
+    app.delete('/devedores', controller.remove)
 }
