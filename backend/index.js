@@ -14,12 +14,10 @@ db.sequelize.authenticate().then(() => {
     console.log("Sincronizado com sucesso...");
 })
 
+require('./src/credor/routes')(app)
 require('./src/devedor/routes')(app)
 require('./src/emprestimo/routes')(app)
 require('./src/pagamento/routes')(app)
-require('./src/mes/routes')(app)
-require('./src/entradas/routes')(app)
-require('./src/saidas/routes')(app)
 
 var server = app.listen(3333, () => {
     console.log("Server is running...")

@@ -1,3 +1,4 @@
+const Credor = require('../credor/model')
 const db = require('./../configs/sequelize')
 const {Model, DataTypes} = db.Sequelize
 const sequelize = db.sequelize
@@ -37,12 +38,36 @@ Emprestimo.init({
     },
     qtd_parcelas_restantes: {
         type: DataTypes.INTEGER
+    },
+    id_credor: {
+        type: DataTypes.INTEGER
     }
 }, {sequelize,
     timestamps: false,
     tableName: 'emprestimos'})
 
-Emprestimo.Devedor = Emprestimo.belongsTo(Devedor)
-Devedor.Emprestimo = Devedor.hasMany(Emprestimo)
+Emprestimo.Devedor = Emprestimo.belongsTo(Devedor, {
+    foreignKey: {
+        name: 'id_devedor'
+    }
+})
+
+Devedor.Emprestimo = Devedor.hasMany(Emprestimo, {
+    foreignKey: {
+        name: 'id_devedor'
+    }
+})
+
+Emprestimo.Credor = Emprestimo.belongsTo(Credor, {
+    foreignKey: {
+        name: 'id_credor'
+    }
+})
+
+Credor.Emprestimo = Credor.hasMany(Emprestimo, {
+    foreignKey: {
+        name: 'id_credor'
+    }
+})
 
 module.exports = Emprestimo

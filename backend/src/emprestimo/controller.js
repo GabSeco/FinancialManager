@@ -1,9 +1,11 @@
 const db = require('./../configs/sequelize')
 const Emprestimo = require('./model')
 const Devedor = require('./../devedor/model')
+const Credor = require('./../credor/model')
 
 exports.create = (req, res) => {
     Emprestimo.create({
+        id_credor: req.body.id_credor,
         id_devedor: req.body.id_devedor,
         inicio_pgto: req.body.inicio_pgto,
         valor_solicitado: req.body.valor_solicitado,
@@ -15,7 +17,8 @@ exports.create = (req, res) => {
         qtd_parcelas_restantes: req.body.qtd_parcelas_restantes
     }, {
         include: [{
-            association: Devedor.Emprestimo
+            association: Devedor.Emprestimo,
+            association: Credor.Emprestimo
         }]
     }).then((emprestimo) => {
         res.send(emprestimo)
